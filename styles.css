@@ -117,37 +117,35 @@
         gap: 15px;
     }
 }
+.update {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content:flex-start;
+    perspective: 800px; /* Ajoute une perspective 3D */
+}
 
-/* Style pour la nav et le lien */
 .update a {
-    display: inline-block;
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    background: linear-gradient(45deg, #ff6a00, #ff3f00); /* Dégradé de couleurs modernes */
-    border-radius: 8px;
     text-decoration: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Ombre douce */
-    transition: all 0.3s ease-in-out; /* Transition fluide pour les effets */
+    background-color: #187018;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Ajoute des transitions */
+    transform-style: preserve-3d; /* Important pour les transformations 3D */
+    transform: translateZ(0); /* Assure que l'élément est dans l'espace 3D */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre pour la profondeur */
 }
 
 .update a:hover {
-    background: linear-gradient(45deg, #ff3f00, #ff6a00); /* Inverser le dégradé au survol */
-    transform: translateY(-5px); /* L'effet de survol pour relever légèrement */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Augmenter l'ombre au survol */
+    transform: translateZ(5px); /* Déplace l'élément vers l'avant au survol */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée */
 }
-
-.update a:focus {
-    outline: none;
-    border: 2px solid #ff3f00; /* Ajouter une bordure de focus moderne */
-}
-
-
 /* 🌟 Conteneur principal */
 .container {
     width: 90%;
-    max-width: 1200px;
+    max-width: 1900px;
     margin: 40px auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -171,7 +169,7 @@
 .product img {
     max-width: 100%;
     height: auto;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 .product h2 {

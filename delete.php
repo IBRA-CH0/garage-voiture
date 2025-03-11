@@ -26,8 +26,8 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $id = intval($_GET['id']); // Sécurisation de l'ID
 
 // Récupérer la voiture sélectionnée
-$stmt = $pdo->prepare("SELECT * FROM car WHERE id = ?");
-$stmt->execute([$id]);
+$stmt = $pdo->prepare("SELECT * FROM car WHERE id = :id");
+$stmt->execute([':id' => $id]);
 $car = $stmt->fetch();
 
 // Vérifier si la voiture existe
@@ -38,9 +38,9 @@ if (!$car) {
 
 // Suppression si l'utilisateur confirme
 if (isset($_POST['delete'])) {
-    $stmt_delete = $pdo->prepare("DELETE FROM car WHERE id = ?");
-    $stmt_delete->execute([$id]);
-
+    $stmt_delete = $pdo->prepare("DELETE FROM car WHERE id = :id");
+    $stmt_delete->execute([':id' => $id]);
+    
     echo "<p class='message-success'>🚗 Voiture supprimée avec succès !</p>";
 
     // Redirection après suppression
@@ -54,10 +54,10 @@ if (isset($_POST['delete'])) {
 
 <div class="vehicle-container">
     <div class="vehicle-card">
-        <img src="images/<?php echo htmlspecialchars($car['image']); ?>" class="vehicle-image">
+        <img src="images/<?php echo ($car['image']); ?>" class="vehicle-image">
         <div class="vehicle-info">
-            <h3 class="vehicle-title"><?php echo htmlspecialchars($car['brand'] . ' ' . $car['model']); ?></h3>
-            <p class="vehicle-power">🚀 Puissance : <strong><?php echo htmlspecialchars($car['horsePower']); ?></strong> chevaux</p>
+            <h3 class="vehicle-title"><?php echo ("{$car['brand']} {$car['model']}"); ?></h3>
+            <p class="vehicle-power">🚀 Puissance : <strong><?php echo ($car['horsePower']); ?></strong> chevaux</p>
             <form method="POST">
                 <button type="submit" name="delete" class="delete-btn">
                     ❌ Supprimer définitivement
@@ -68,4 +68,3 @@ if (isset($_POST['delete'])) {
 </div>
 
 <?php require_once("template/footer.php"); ?>
-

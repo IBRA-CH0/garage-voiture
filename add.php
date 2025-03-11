@@ -3,6 +3,17 @@ require_once("config.php");
 require_once("template/header.php");
 require_once("template/navbar.php");
 
+// Démarrer la session si elle n'est pas déjà active
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION["users_id"])) {
+    header("Location: index.php"); // Rediriger vers la page de connexion
+    exit;
+}
+
 // Connexion à la base de données
 $pdo = connectDB();
 
@@ -15,12 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $image = $_POST['image'];
 
     // Requête pour insérer la voiture dans la base de données
-    $stmt = $pdo->prepare("INSERT INTO car (brand, model, horsePower, image) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$brand, $model, $horsePower, $image]);
-
-    // Rediriger vers la page d'index après l'ajout
+    $requete_insert = $pdo->prepare("INSERT INTO car (brand, model, horsePower, image) VALUES (:brand, :model, :horsePower, :image)");
+    $requete_insert->execute([
+        ':brand' => $brand,
+        ':model' => $model,
+        ':horsePower' => $horsePower,
+        ':image' => $image
+    ]);
+    // Redirection vers admin.php
     header('Location: admin.php');
-    exit;
+    exit; // Assurez-vous que le script s'arrête ici après la redirection
 }
 ?>
 

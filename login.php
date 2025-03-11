@@ -22,9 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mot_de_passe = $_POST["mot_de_passe"];
 
     // Recherche l'utilisateur dans la table `users` avec l'email
-    $query = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-    $query->execute([$email]);
-    $user = $query->fetch(PDO::FETCH_ASSOC);
+    $search_users = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+    $search_users->execute([':email' => $email]);
+    $user = $search_users->fetch(PDO::FETCH_ASSOC);
+    
 
     // Vérifier si l'utilisateur existe et si le mot de passe est correct
     if ($user && password_verify($mot_de_passe, $user["mot_de_passe"])) {
@@ -50,4 +51,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </form>
 
 <?php require_once("template/footer.php"); ?>
-
